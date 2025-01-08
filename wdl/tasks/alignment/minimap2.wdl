@@ -32,8 +32,9 @@ task IndexWithMinimap2 {
 
     parameter_meta {
         ref_fasta: "Reference genome in FASTA format"
+        preset: "Minimap2 parameter preset to use"
         extra_params: "Extra parameters to pass to minimap2"
-        runtime_attr: "Runtime attributes for the task"
+        runtime_attr_override: "Runtime attributes for the task"
     }
     
     command <<<
@@ -88,11 +89,10 @@ task Minimap2WithIx {
     }
 
     parameter_meta {
-        ref_fasta: "Reference genome in FASTA format"
-        ref_mm2_ix: "Pre-built Minimap2 index of the reference genome"
+        ref_mmi: "Pre-built Minimap2 index of the reference genome"
         query_fasta: "Query genome in FASTA format"
         extra_params: "Extra parameters to pass to minimap2"
-        runtime_attr: "Runtime attributes for the task"
+        runtime_attr_override: "Runtime attributes for the task"
     }
     
     command <<<
