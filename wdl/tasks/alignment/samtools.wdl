@@ -31,7 +31,7 @@ task Merge {
     parameter_meta {
         bams: "List of BAM files to merge"
         out_prefix: "Prefix for the output BAM file name"
-        runtime_attr: "Runtime attributes for the task"
+        runtime_attr_override: "Runtime attributes for the task"
     }
     
     command <<<
