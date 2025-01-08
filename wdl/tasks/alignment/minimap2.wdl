@@ -8,8 +8,11 @@ task IndexWithMinimap2 {
         String preset = "asm5"
         String? extra_params
         String? out_prefix
+        
+        RuntimeAttr? runtime_attr_override
     }
     
+    Int disk_size = 1 + 20*ceil(size(ref_fasta, "GB"))
     RuntimeAttr default_attr = object {
         cpu_cores:          4,
         mem_gb:             32,
@@ -22,7 +25,6 @@ task IndexWithMinimap2 {
     RuntimeAttr runtime_attr = select_first([runtime_attr_override, default_attr])
     
     Int num_cpu = select_first([runtime_attr.cpu_cores, 1])
-    Int disk_size = 1 + 20*ceil(size(ref_fasta, "GB"))
     
     meta {
         description: "Create a Minimap2 index of a reference genome"
@@ -51,20 +53,22 @@ task IndexWithMinimap2 {
         bootDiskSizeGb:         select_first([runtime_attr.boot_disk_gb,      default_attr.boot_disk_gb])
         preemptible:            select_first([runtime_attr.preemptible_tries, default_attr.preemptible_tries])
         maxRetries:             select_first([runtime_attr.max_retries,       default_attr.max_retries])
-        docker:                 select_first([runtime_attr.docker,            default_attr.docker]),
+        docker:                 select_first([runtime_attr.docker,            default_attr.docker])
     }
 }
     
 
 task Minimap2WithIx {
     input {
-        File ref_mm2_ix
+        File ref_mmi
         File query_fasta
         String? extra_params
-        String? out_prefix = "aligned"
+        String out_prefix = "aligned"
 
         RuntimeAttr? runtime_attr_override
     }
+    
+    Int disk_size = 1 + 10*2*ceil(size(query_fasta, "GB") + size(ref_mmi, "GB"))
     
     RuntimeAttr default_attr = object {
         cpu_cores:          4,
@@ -77,8 +81,7 @@ task Minimap2WithIx {
     }
     RuntimeAttr runtime_attr = select_first([runtime_attr_override, default_attr])
     
-    Int num_cpu = select_first([runtime_attr.cpu_cores, 1])
-    Int disk_size = 1 + 10*2*ceil(size(query_fasta, "GB") + size(ref_mm2_ix, "GB") + size(ref_fasta, "GB"))
+    Int num_cpu = select_first([runtime_attr.cpu_cores, default_attr.cpu_cores])
     
     meta {
         description: "Align a query genome to a reference genome using Minimap2, using a pre-built index"
@@ -94,7 +97,7 @@ task Minimap2WithIx {
     
     command <<<
         set -euxo pipefail
-        minimap2 -t ~{num_cpu - 1} ~{extra_params} -d ~{ref_mm2_ix} ~{query_fasta} \
+        minimap2 -t ~{num_cpu - 1} ~{extra_params} -d ~{ref_mmi} ~{query_fasta} \
             | samtools sort -Obam -o ~{out_prefix}.bam
     >>>
     
@@ -109,6 +112,6 @@ task Minimap2WithIx {
         bootDiskSizeGb:         select_first([runtime_attr.boot_disk_gb,      default_attr.boot_disk_gb])
         preemptible:            select_first([runtime_attr.preemptible_tries, default_attr.preemptible_tries])
         maxRetries:             select_first([runtime_attr.max_retries,       default_attr.max_retries])
-        docker:                 select_first([runtime_attr.docker,            default_attr.docker]),
+        docker:                 select_first([runtime_attr.docker,            default_attr.docker])
     }
 }
