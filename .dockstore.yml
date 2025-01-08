@@ -1,0 +1,8 @@
+version: 1.2
+workflows:
+- name: Minimap2RefIndex
+  subclass: wdl
+  primaryDescriptorPath: /wdl/TechAgnostic/Minimap2RefIndex.wdl
+- name: Minimap2WGA
+  subclass: wdl
+  primaryDescriptorPath: /wdl/TechAgnostic/Minimap2WGA.wdl

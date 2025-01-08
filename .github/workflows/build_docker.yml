@@ -59,7 +59,7 @@ jobs:
         uses: google-github-actions/auth@v2
         with:
           project_id: broad-dsp-lrma
-          workload_identity_provider: projects/602335226495/locations/global/workloadIdentityPools/github/providers/
+          workload_identity_provider: projects/602335226495/locations/global/workloadIdentityPools/github/providers/pangenome-pipelines
           service_account: ${{ vars.SERVICE_ACCOUNT }}
           token_format: access_token
 
