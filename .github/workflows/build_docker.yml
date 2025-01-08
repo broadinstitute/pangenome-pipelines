@@ -21,6 +21,7 @@ jobs:
         id: changed-files
         uses: tj-actions/changed-files@v45
         with:
+          separator: '\n'
           files: |
             docker/**
       - name: Compile list of dockers to rebuild

@@ -66,9 +66,12 @@ def main():
     args = parser.parse_args()
 
     repo_root = find_repo_root(Path(__file__))
+    if not repo_root:
+        return
+        
     repo_docker_root = repo_root / DOCKER_IMGS_PATH
 
-    docker_images = set()
+    docker_images: set[str] = set()
     for f in map(lambda line: Path(line.strip()), args.finput):
         if not f.is_file():
             print("Non-existing file:", f, file=sys.stderr)
