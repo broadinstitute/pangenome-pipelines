@@ -18,7 +18,7 @@ task Merge {
         boot_disk_gb:       20,
         preemptible_tries:  3,
         max_retries:        2,
-        docker:             "us-central1-docker.pkg.dev/broad-dsp-lrma/pangenome-pipelines/minimap2:latest"
+        docker:             "us-central1-docker.pkg.dev/broad-dsp-lrma/pangenome-pipelines/minimap2:main"
     }
     RuntimeAttr runtime_attr = select_first([runtime_attr_override, default_attr])
     
