@@ -32,6 +32,6 @@ workflow Minimap2WGA {
 
     output {
         File bam = Merge.bam
-        File bai = MErge.bai
+        File bai = Merge.bai
     }
 }
