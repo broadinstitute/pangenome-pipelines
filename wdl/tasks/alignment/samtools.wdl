@@ -38,10 +38,12 @@ task Merge {
         set -euxo pipefail
         
         samtools merge -@ ~{num_cpu} -o ~{out_prefix}.bam ~{sep=" " bams}
+        samtools index ~{out_prefix}.bam
     >>>
     
     output {
         File bam = "~{out_prefix}.bam"
+        File bai = "~{out_prefix}.bam.bai"
     }
     
     runtime {
