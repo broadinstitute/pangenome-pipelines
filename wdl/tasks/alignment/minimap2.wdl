@@ -14,7 +14,7 @@ task IndexWithMinimap2 {
     
     Int disk_size = 1 + 20*ceil(size(ref_fasta, "GB"))
     RuntimeAttr default_attr = object {
-        cpu_cores:          4,
+        cpu_cores:          2,
         mem_gb:             32,
         disk_gb:            disk_size,
         boot_disk_gb:       20,
@@ -24,7 +24,7 @@ task IndexWithMinimap2 {
     }
     RuntimeAttr runtime_attr = select_first([runtime_attr_override, default_attr])
     
-    Int num_cpu = select_first([runtime_attr.cpu_cores, 1])
+    Int num_cpu = select_first([runtime_attr.cpu_cores, default_attr.cpu_cores])
     
     meta {
         description: "Create a Minimap2 index of a reference genome"
@@ -40,7 +40,7 @@ task IndexWithMinimap2 {
     command <<<
         set -euxo pipefail
         
-        minimap2 -t ~{num_cpu - 1} -x ~{preset} ~{extra_params} -d ~{out_prefix}.mmi ~{ref_fasta}
+        minimap2 -t ~{num_cpu} -x ~{preset} ~{extra_params} -d ~{out_prefix}.mmi ~{ref_fasta}
     >>>
     
     output {
