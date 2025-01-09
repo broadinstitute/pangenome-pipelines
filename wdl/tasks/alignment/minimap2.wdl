@@ -99,10 +99,12 @@ task Minimap2WithIx {
         set -euxo pipefail
         minimap2 -at ~{num_cpu - 1} ~{extra_params} ~{ref_mmi} ~{query_fasta} \
             | samtools sort -Obam -o ~{out_prefix}.bam
+        samtools index ~{out_prefix}.bam
     >>>
     
     output {
         File bam = "~{out_prefix}.bam"
+        File bai = "~{out_prefix}.bam.bai"
     }
     
     runtime {
