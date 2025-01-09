@@ -97,7 +97,7 @@ task Minimap2WithIx {
     
     command <<<
         set -euxo pipefail
-        minimap2 -t ~{num_cpu - 1} ~{extra_params} -a -d ~{ref_mmi} ~{query_fasta} \
+        minimap2 -at ~{num_cpu - 1} ~{extra_params} ~{ref_mmi} ~{query_fasta} \
             | samtools sort -Obam -o ~{out_prefix}.bam
     >>>
     
