@@ -21,7 +21,7 @@ workflow Minimap2RefIndex {
         out_prefix: "Prefix for the output index file name."
     }
     
-    String prefix = select_first([out_prefix, basename(ref_fasta)])
+    String prefix = select_first([out_prefix, basename(ref_fasta) + ".~{preset}"])
     
     call minimap2.IndexWithMinimap2 {
         input: 
