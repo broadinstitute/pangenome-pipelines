@@ -6,3 +6,6 @@ workflows:
 - name: Minimap2WGA
   subclass: wdl
   primaryDescriptorPath: /wdl/pipelines/TechAgnostic/Minimap2WGA.wdl
+- name: MinigraphWGA
+  subclass: wdl
+  primaryDescriptorPath: /wdl/pipelines/TechAgnostic/MinigraphWGA.wdl
