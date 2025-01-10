@@ -5,7 +5,7 @@ import "../../tasks/alignment/samtools.wdl" as samtools
 
 workflow Minimap2WGA {
     meta {
-        description: "Align reads to a reference genome using Minimap2, requiring an existing minimap2 index. If provided with multiple query fastas (e.g., multiple haplotypes), will merge resulting BAMs."
+        description: "Align a query genome to another reference using Minimap2, requiring an existing minimap2 index. If provided with multiple query fastas (e.g., multiple haplotypes), will merge resulting BAMs."
     }
 
     input {

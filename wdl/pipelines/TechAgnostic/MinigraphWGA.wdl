@@ -5,7 +5,7 @@ import "../../tasks/utils/shell.wdl" as shell
 
 workflow MinigraphWGA {
     meta {
-        description: "Align reads to a reference genome using Minimap2, requiring an existing minimap2 index. If provided with multiple query fastas (e.g., multiple haplotypes), will merge resulting BAMs."
+        description: "Align an assembly to a reference graph using Minigraph. Outputs a GAF file."
     }
 
     input {
