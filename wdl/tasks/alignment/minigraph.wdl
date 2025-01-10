@@ -29,7 +29,7 @@ task MinigraphAsmAlignment {
     Int disk_size = 1 + 10*ceil(size(ref_graph_gfa, "GB") + size(query_fasta, "GB"))
     RuntimeAttr default_attr = object {
         cpu_cores:          4,
-        mem_gb:             32,
+        mem_gb:             64,
         disk_gb:            disk_size,
         boot_disk_gb:       20,
         preemptible_tries:  3,
